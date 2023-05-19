@@ -1,0 +1,29 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["jsonProtocol"]
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
+model sample_data {
+  id         Int
+  first_name String @db.VarChar(250)
+  last_name  String @db.VarChar(250)
+  age        String @db.VarChar(30)
+  gender     String @db.VarChar(30)
+
+  @@ignore
+}
+
+model solar_table {
+  id          Int       @id @unique(map: "id_UNIQUE") @default(autoincrement())
+  updated_at  DateTime? @db.DateTime(0)
+  temperature Float
+  humidity    Float
+  CO2         Float
+  PH          Float
+}
